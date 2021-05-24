@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+    application:
+      name: springboot-emq
+    datasource: #数据库相关
+      url: jdbc:mysql://192.168.1.11:3306/emq_zkar?serverTimezone=GMT%2B8&characterEncoding=utf-8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+    mvc:
+      date-format: yyyy-MM-dd HH:mm:ss #mvc接收参数时对日期进行格式化
+    jackson:
+      date-format: yyyy-MM-dd HH:mm:ss #jackson对响应回去的日期参数进行格式化
+      time-zone: GMT+8
+
+#如果采用xml配置方式则需要进行加载扫描 xml文件放在src/main/java目录或者放在resource目录都可以，指定好路径就可以
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  configLocation: classpath:mybatis/mybatis-config.xml
+# emq
+mqtt:
+  clientID: ZKARWUXI20209001
+  username: admin
+  password: public
+  serverURI: tcp://192.168.1.12:1883
+  isReconnect: true
+  keepAliveInterval: 20
+  topic: ZKARWUXI20209001

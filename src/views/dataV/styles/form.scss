@@ -1,0 +1,39 @@
+.table-main ::v-deep .el-form-item__label {
+  text-align: right;
+  vertical-align: middle;
+  float: left;
+  font-size: 1.4rem;
+  color: #A2BBCF;
+  font-weight: 400;
+  line-height: 4rem;
+  padding: 0 1.2rem 0 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.table-main ::v-deep .el-form-item {
+  margin-bottom: .6rem;
+}
+
+.table-main ::v-deep .el-checkbox__label {
+  font-size: 1.4rem;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.table-main ::v-deep .el-checkbox__inner {
+  display: inline-block;
+  position: relative;
+  border: 0.1rem solid #95AABD;
+  border-radius: 0 !important;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: transparent;
+  z-index: 1;
+  -webkit-transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46), background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46);
+  transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46), background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46);
+
+}

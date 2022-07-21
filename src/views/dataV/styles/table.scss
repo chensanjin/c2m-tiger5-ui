@@ -1,0 +1,88 @@
+@import '~@/assets/styles/scrollbar.scss';
+@import '~@/views/dataV/styles/input.scss';
+
+//  height: 80%;;
+//  margin-top: 10px;
+.table-main ::v-deep .el-table--enable-row-hover .el-table__body tr:hover>td {
+  background-color: #3A4F63;
+  // color: #fff;
+}
+
+.table-main ::v-deep .el-table__body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+
+/* 删除表格下横线 */
+.table-main ::v-deep .el-table::before {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0px;
+}
+
+.table-main ::v-deep.el-table--group::after,
+.el-table--border::after {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0px;
+}
+
+.table-main ::v-deep .el-table,
+.el-table__expanded-cell {
+  background-color: #3A4F63;
+  border: .1rem solid rgba(233, 238, 243, 0.2);
+}
+
+.table-main ::v-deep .el-table tr {
+  background-color: #314354 !important;
+  border: .1rem solid rgba(233, 238, 243, 0.2) !important;
+}
+
+.table-main ::v-deep .el-table th {
+  background-color: #314354 !important;
+  border: .1rem solid rgba(233, 238, 243, 0.2);
+  font-weight: 400;
+  font-size: 1.4rem !important;
+  color: #fff;
+}
+
+.table-main ::v-deep .el-table td,
+.el-table th.is-leaf {
+  border: .1rem solid rgba(233, 238, 243, 0.2);
+  // background-color: rgba(30, 144, 255, 0.2);
+  font-size: 1.4rem !important;
+  color: #fff;
+}
+
+//修改表格的滚动条
+.table-main ::v-deep .el-table__body-wrapper::-webkit-scrollbar {
+  width: 1rem;
+  height: 1rem;
+}
+
+//滚动条的滑块
+.table-main ::v-deep .el-table__body-wrapper::-webkit-scrollbar-thumb {
+  //   background-color: #a1a3a9;
+  //   border-radius: 3px;
+  background-color: #7C9CB5;
+  border-radius: .3rem;
+}
+
+.table-main ::v-deep .el-table__body tr:hover>td {
+  background-color: #3E556B !important;
+}
+
+.table-main ::v-deep .el-table__body tr.current-row>td {
+  background-color: #3E556B !important;
+}
+
+
+::v-deep .el-input__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,22 @@
+.dialog ::v-deep .el-dialog__title{
+  color: #fff;
+  font-size: 1.8rem;
+}
+.dialog ::v-deep .el-dialog__header{
+  background-color: #4B657D;
+  padding: 1.5rem 0 1.5rem 3rem;
+}
+.dialog ::v-deep .el-dialog__headerbtn .el-dialog__close{
+  color:#fff;
+}
+.dialog ::v-deep .el-dialog__body{
+  color: #fff;
+  font-size: 1.8rem;
+  background-color: #3A4F63;
+  padding:  3rem 2rem;
+}
+.dialog ::v-deep .el-dialog__footer{
+  border-top:0.1rem solid rgba(233, 238, 243, 0.2);
+  background-color: #3A4F63;
+  padding: 1rem 2rem 1rem 0;
+}

@@ -16,6 +16,8 @@
         <div class="selectBoxTitle">
           谨慎刷新，15秒以上，建议一个月刷一次
         </div>
+        <el-input  v-model="st" label-width="120px"></el-input>
+        <el-input  v-model="et" label-width="120px"></el-input>
       </div>
     </div>
     <el-table :data="cameraList" v-loading="loading">
@@ -39,6 +41,8 @@ export default {
   },
   data() {
     return {
+      st: '',
+      et: '',
       options: [{ value: 'y', lable: '是否' }, { value: 'n', lable: '是否' }],
       loading: false,
 
@@ -80,13 +84,31 @@ export default {
   },
   created() {
     this.getList()
-
+    this.st = this.getNowFormatDate();
+    this.et = this.getNowFormatDate();
   },
   methods: {
-
+      //获取当前时间，格式YYYY-MM-DD
+      getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    },
     /** 查询监控设备列表 */
     getList() {
       this.loading = true
+      this.queryParams.st=this.st
+      this.queryParams.et=this.et
       getMonthValue3(this.queryParams).then(response => {
         this.loading = false
         this.cameraList = response

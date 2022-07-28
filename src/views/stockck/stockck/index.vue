@@ -1,22 +1,62 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="股票代码sh、sz" prop="code">
+      <el-form-item label="ex-code" prop="code">
         <el-input
           v-model="queryParams.code"
-          placeholder="请输入股票代码sh、sz"
+          placeholder="请输入ex-code"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="交易日期" prop="date">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.date"
-          type="date"
+      <el-form-item label="交易日期">
+        <el-date-picker
+          v-model="daterangeDate"
+          size="small"
+          style="width: 240px"
           value-format="yyyy-MM-dd"
-          placeholder="选择交易日期">
-        </el-date-picker>
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item label="开盘价" prop="open">
+        <el-input
+          v-model="queryParams.open"
+          placeholder="请输入开盘价"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="最高价" prop="high">
+        <el-input
+          v-model="queryParams.high"
+          placeholder="请输入最高价"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="最低价" prop="low">
+        <el-input
+          v-model="queryParams.low"
+          placeholder="请输入最低价"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="收盘价" prop="close">
+        <el-input
+          v-model="queryParams.close"
+          placeholder="请输入收盘价"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="涨跌幅" prop="change">
         <el-input
@@ -72,18 +112,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="近期财告日期" prop="reportDate">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.reportDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="近期财告日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="市盈率" prop="peTtm">
+      <el-form-item label="pe" prop="peTtm">
         <el-input
           v-model="queryParams.peTtm"
-          placeholder="请输入市盈率"
+          placeholder="请输入pe"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -101,25 +133,16 @@
       <el-form-item label="市现率" prop="pcTtm">
         <el-input
           v-model="queryParams.pcTtm"
-          placeholder="请输入最近12个月市现率，股价/最近12个月每股经营现金流"
+          placeholder="请输入市现率"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="市净率，股价/最近期财报每股净资产" prop="pb">
+      <el-form-item label="市净率" prop="pb">
         <el-input
           v-model="queryParams.pb"
-          placeholder="请输入市净率，股价/最近期财报每股净资产"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="复权开始时间为股票最近一个交易日" prop="adjustPriceF">
-        <el-input
-          v-model="queryParams.adjustPriceF"
-          placeholder="请输入复权开始时间为股票最近一个交易日"
+          placeholder="市净率"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -132,7 +155,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -163,7 +186,7 @@
           @click="handleDelete"
           v-hasPermi="['stockck:stockck:remove']"
         >删除</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -180,22 +203,27 @@
 
     <el-table v-loading="loading" :data="stockckList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="股票的代码，上证股票以sh开头，深证股票以sz开头" align="center" prop="code" />
+      <el-table-column label="ex-code" align="center" prop="code" />
       <el-table-column label="交易日期" align="center" prop="date" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.date, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最近一期财务报告实际发布的日期" align="center" prop="reportDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.reportDate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="	最近12个月市盈率，股价/最近12个月归属母公司的每股收益" align="center" prop="peTtm" />
-      <el-table-column label="最近12个月市销率，股价/最近12个月每股营业收入" align="center" prop="psTtm" />
-      <el-table-column label="最近12个月市现率，股价/最近12个月每股经营现金流" align="center" prop="pcTtm" />
-      <el-table-column label="市净率，股价/最近期财报每股净资产" align="center" prop="pb" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="开盘价" align="center" prop="open" />
+      <el-table-column label="最高价" align="center" prop="high" />
+      <el-table-column label="最低价" align="center" prop="low" />
+      <el-table-column label="收盘价" align="center" prop="close" />
+      <el-table-column label="涨跌幅" align="center" prop="change" />
+      <el-table-column label="成交量(W)" align="center" prop="volume" />
+      <el-table-column label="成交额(W)" align="center" prop="money" />
+      <el-table-column label="流通市值(E)" align="center" prop="tradedMarketValue" />
+      <el-table-column label="总市值(E)" align="center" prop="marketValue" />
+      <el-table-column label="换手率" align="center" prop="turnover" />
+      <el-table-column label="pe" align="center" prop="peTtm" />
+      <el-table-column label="市销率" align="center" prop="psTtm" />
+      <el-table-column label="市现率" align="center" prop="pcTtm" />
+      <el-table-column label="市净率" align="center" prop="pb" />
+      <!-- <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -212,9 +240,9 @@
             v-hasPermi="['stockck:stockck:remove']"
           >删除</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -226,78 +254,6 @@
     <!-- 添加或修改单票历史对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="股票的代码，上证股票以sh开头，深证股票以sz开头" prop="code">
-          <el-input v-model="form.code" placeholder="请输入股票的代码，上证股票以sh开头，深证股票以sz开头" />
-        </el-form-item>
-        <el-form-item label="交易日期" prop="date">
-          <el-date-picker clearable size="small"
-            v-model="form.date"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择交易日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="开盘价" prop="open">
-          <el-input v-model="form.open" placeholder="请输入开盘价" />
-        </el-form-item>
-        <el-form-item label="最高价" prop="high">
-          <el-input v-model="form.high" placeholder="请输入最高价" />
-        </el-form-item>
-        <el-form-item label="最低价" prop="low">
-          <el-input v-model="form.low" placeholder="请输入最低价" />
-        </el-form-item>
-        <el-form-item label="收盘价" prop="close">
-          <el-input v-model="form.close" placeholder="请输入收盘价" />
-        </el-form-item>
-        <el-form-item label="复权之后的真实涨跌幅" prop="change">
-          <el-input v-model="form.change" placeholder="请输入复权之后的真实涨跌幅" />
-        </el-form-item>
-        <el-form-item label="成交量" prop="volume">
-          <el-input v-model="form.volume" placeholder="请输入成交量" />
-        </el-form-item>
-        <el-form-item label="成交额" prop="money">
-          <el-input v-model="form.money" placeholder="请输入成交额" />
-        </el-form-item>
-        <el-form-item label="流通市值" prop="tradedMarketValue">
-          <el-input v-model="form.tradedMarketValue" placeholder="请输入流通市值" />
-        </el-form-item>
-        <el-form-item label="总市值" prop="marketValue">
-          <el-input v-model="form.marketValue" placeholder="请输入总市值" />
-        </el-form-item>
-        <el-form-item label="换手率，成交量/流通股本" prop="turnover">
-          <el-input v-model="form.turnover" placeholder="请输入换手率，成交量/流通股本" />
-        </el-form-item>
-        <el-form-item label="复权开始时间为股票上市日" prop="adjustPrice">
-          <el-input v-model="form.adjustPrice" placeholder="请输入复权开始时间为股票上市日" />
-        </el-form-item>
-        <el-form-item label="最近一期财务报告的类型" prop="reportType">
-          <el-select v-model="form.reportType" placeholder="请选择最近一期财务报告的类型">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="最近一期财务报告实际发布的日期" prop="reportDate">
-          <el-date-picker clearable size="small"
-            v-model="form.reportDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择最近一期财务报告实际发布的日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="	最近12个月市盈率，股价/最近12个月归属母公司的每股收益" prop="peTtm">
-          <el-input v-model="form.peTtm" placeholder="请输入	最近12个月市盈率，股价/最近12个月归属母公司的每股收益" />
-        </el-form-item>
-        <el-form-item label="最近12个月市销率，股价/最近12个月每股营业收入" prop="psTtm">
-          <el-input v-model="form.psTtm" placeholder="请输入最近12个月市销率，股价/最近12个月每股营业收入" />
-        </el-form-item>
-        <el-form-item label="最近12个月市现率，股价/最近12个月每股经营现金流" prop="pcTtm">
-          <el-input v-model="form.pcTtm" placeholder="请输入最近12个月市现率，股价/最近12个月每股经营现金流" />
-        </el-form-item>
-        <el-form-item label="市净率，股价/最近期财报每股净资产" prop="pb">
-          <el-input v-model="form.pb" placeholder="请输入市净率，股价/最近期财报每股净资产" />
-        </el-form-item>
-        <el-form-item label="复权开始时间为股票最近一个交易日" prop="adjustPriceF">
-          <el-input v-model="form.adjustPriceF" placeholder="请输入复权开始时间为股票最近一个交易日" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -337,24 +293,28 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 交易日期时间范围
+      daterangeDate: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
         code: null,
         date: null,
+        open: null,
+        high: null,
+        low: null,
+        close: null,
         change: null,
         volume: null,
         money: null,
         tradedMarketValue: null,
         marketValue: null,
         turnover: null,
-        reportDate: null,
         peTtm: null,
         psTtm: null,
         pcTtm: null,
         pb: null,
-        adjustPriceF: null
       },
       // 表单参数
       form: {},
@@ -368,11 +328,34 @@ export default {
     this.getList();
   },
   methods: {
+    //获取当前时间，格式YYYY-MM-DD
+    getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    },
     initDtableOptions(){
+      this.daterangeDate[0] = this.getNowFormatDate();
+      this.daterangeDate[1] = this.daterangeDate[0];
     },
     /** 查询单票历史列表 */
     getList() {
       this.loading = true;
+      this.queryParams.params = {};
+      if (null != this.daterangeDate && '' != this.daterangeDate) {
+        this.queryParams.params["beginDate"] = this.daterangeDate[0];
+        this.queryParams.params["endDate"] = this.daterangeDate[1];
+      }
       listStockck(this.queryParams).then(response => {
         this.stockckList = response.rows;
         this.total = response.total;
@@ -417,6 +400,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.daterangeDate = [];
       this.resetForm("queryForm");
       this.handleQuery();
     },

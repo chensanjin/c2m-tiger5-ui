@@ -3,21 +3,16 @@
 
     <div style="margin-bottom: 20px;">
       <div class="selectBox">
-        <div class="selectBoxLeft">
-          是否刷缓存
-        </div>
-        <div class="selectBoxRight">
-          <el-select v-model="queryParams.cacheFlag" placeholder="是否刷缓存" @change="getList">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" 
-                       :value="item.value">
-            </el-option>
-          </el-select>
-        </div>
-        <div class="selectBoxTitle">
-          谨慎刷新，15秒以上，建议一个月刷一次
-        </div>
-        <el-input  v-model="st" label-width="120px"></el-input>
-        <el-input  v-model="et" label-width="120px"></el-input>
+ <el-date-picker
+          @change="timeChange"
+          v-model="time"
+          size="small"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+      >
+    </el-date-picker>
+  <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">刷缓存</el-button>
       </div>
     </div>
     <el-table :data="cameraList" v-loading="loading">
@@ -79,18 +74,38 @@ export default {
         cameraName: [
           { required: true, message: '摄像头不能为空', trigger: 'blur' }
         ]
-      }
+      },
+      time:[],
     }
   },
   created() {
     this.getList()
     this.st = this.getNowFormatDate();
     this.et = this.getNowFormatDate();
+    this.initDtableOptions();
   },
   methods: {
+      initDtableOptions(){
+        this.time[0] = this.getNowFormatDate(7);
+        this.time[1] = this.getNowFormatDate();
+      },
+    timeChange(){
+      this.st = this.time[0]
+      this.et = this.time[1]
+    },
+    handleQuery(){
+      this.queryParams.cacheFlag = 'y',
+      this.getList()
+    },
       //获取当前时间，格式YYYY-MM-DD
-      getNowFormatDate() {
-        var date = new Date();
+      getNowFormatDate(time) {
+          var date = new Date();
+        if(time){
+       let myDate=new Date()
+        date=new Date(myDate.getTime() - 1000*60*60*24*time);
+        console.warn(date)
+        }
+
         var seperator1 = "-";
         var year = date.getFullYear();
         var month = date.getMonth() + 1;

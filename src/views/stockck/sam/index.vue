@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="涨跌" prop="rate">
+      <el-form-item label="涨跌>=" prop="rate">
         <el-input
           v-model="queryParams.rate"
           placeholder="请输入涨跌"
@@ -47,6 +47,7 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="changeDiog">echart图</el-button>
       </el-form-item>
     </el-form>
 
@@ -172,19 +173,34 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+
+  <el-dialog
+  title="echarts页面"
+  :visible.sync="echartsDialogVisible"
+  width=80%;
+  height=80%;
+  >
+  <div ref="macarons" style="width: 100%; height: 200px;"></div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
+
   </div>
 </template>
 
 <script>
 import { listSam, getSam, delSam, addSam, updateSam, exportSam } from "@/api/stockck/sam";
-
-
+import echarts from 'echarts'
 export default {
   name: "Sam",
   components: {
   },
   data() {
     return {
+      echartsDialogVisible:false,
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -239,6 +255,45 @@ export default {
     this.getList();
   },
   methods: {
+    changeDiog(){
+      this.echartsDialogVisible=true
+      this.$nextTick(()=>{
+        this.initChart()
+      })
+    },
+ initChart() {
+    console.warn(echarts)
+      this.chart = echarts.init(this.$refs.macarons)
+      console.warn(this.chart)
+      this.initEcharts()
+    },
+
+    initEcharts(){
+ const option = { legend: {},
+            tooltip: {},
+            dataset: {
+              source: [
+
+                ['订单', 43.3, 85.8],
+                ['订单1', 83.1, 73.4],
+                ['订单2', 86.4, 65.2],
+                ['订单3', 72.4, 53.9],
+                ['订单4', 82.4, 53.9],
+                ['订单5', 42.4, 53.9],
+                ['订单6', 72.4, 53.9],
+                ['订单7', 72.4, 53.9]
+              ]
+            },
+            xAxis: { type: 'category' },
+            yAxis: {},
+
+            series: [ { type: 'bar' }, { type: 'bar' }]}
+          this.chart.setOption(option)
+
+
+
+
+    },
     initDtableOptions(){
     },
     /** 查询rank票列表 */

@@ -6,6 +6,7 @@
           v-model="queryParams.code"
           placeholder="请输入ex-code"
           clearable
+           class="inputWidth"
           size="small"
           @keyup.enter.native="handleQuery"
         />
@@ -14,7 +15,7 @@
         <el-date-picker
           v-model="daterangeDate"
           size="small"
-          style="width: 240px"
+          class="inputWidth"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
@@ -27,6 +28,7 @@
           v-model="queryParams.open"
           placeholder="请输入开盘价"
           clearable
+          class="inputWidth"
           size="small"
           @keyup.enter.native="handleQuery"
         />
@@ -34,6 +36,7 @@
       <el-form-item label="最高价" prop="high">
         <el-input
           v-model="queryParams.high"
+          class="inputWidth"
           placeholder="请输入最高价"
           clearable
           size="small"
@@ -43,6 +46,7 @@
       <el-form-item label="最低价" prop="low">
         <el-input
           v-model="queryParams.low"
+          class="inputWidth"
           placeholder="请输入最低价"
           clearable
           size="small"
@@ -52,6 +56,7 @@
       <el-form-item label="收盘价" prop="close">
         <el-input
           v-model="queryParams.close"
+          class="inputWidth"
           placeholder="请输入收盘价"
           clearable
           size="small"
@@ -61,6 +66,7 @@
       <el-form-item label="涨跌幅" prop="change">
         <el-input
           v-model="queryParams.change"
+          class="inputWidth"
           placeholder="请输入涨跌幅"
           clearable
           size="small"
@@ -70,6 +76,7 @@
       <el-form-item label="成交量" prop="volume">
         <el-input
           v-model="queryParams.volume"
+          class="inputWidth"
           placeholder="请输入成交量"
           clearable
           size="small"
@@ -79,6 +86,7 @@
       <el-form-item label="成交额" prop="money">
         <el-input
           v-model="queryParams.money"
+          class="inputWidth"
           placeholder="请输入成交额"
           clearable
           size="small"
@@ -88,6 +96,7 @@
       <el-form-item label="流通市值" prop="tradedMarketValue">
         <el-input
           v-model="queryParams.tradedMarketValue"
+          class="inputWidth"
           placeholder="请输入流通市值"
           clearable
           size="small"
@@ -97,6 +106,7 @@
       <el-form-item label="总市值" prop="marketValue">
         <el-input
           v-model="queryParams.marketValue"
+          class="inputWidth"
           placeholder="请输入总市值"
           clearable
           size="small"
@@ -106,6 +116,7 @@
       <el-form-item label="换手率" prop="turnover">
         <el-input
           v-model="queryParams.turnover"
+          class="inputWidth"
           placeholder="请输入换手率"
           clearable
           size="small"
@@ -115,6 +126,7 @@
       <el-form-item label="pe" prop="peTtm">
         <el-input
           v-model="queryParams.peTtm"
+          class="inputWidth"
           placeholder="请输入pe"
           clearable
           size="small"
@@ -124,6 +136,7 @@
       <el-form-item label="市销率" prop="psTtm">
         <el-input
           v-model="queryParams.psTtm"
+          class="inputWidth"
           placeholder="请输入市销率"
           clearable
           size="small"
@@ -133,6 +146,7 @@
       <el-form-item label="市现率" prop="pcTtm">
         <el-input
           v-model="queryParams.pcTtm"
+          class="inputWidth"
           placeholder="请输入市现率"
           clearable
           size="small"
@@ -142,6 +156,7 @@
       <el-form-item label="市净率" prop="pb">
         <el-input
           v-model="queryParams.pb"
+          class="inputWidth"
           placeholder="市净率"
           clearable
           size="small"
@@ -213,16 +228,16 @@
       <el-table-column label="最高价" align="center" prop="high" />
       <el-table-column label="最低价" align="center" prop="low" />
       <el-table-column label="收盘价" align="center" prop="close" />
-      <el-table-column label="涨跌幅" align="center" prop="change" />
+      <el-table-column label="涨跌幅" show-overflow-tooltip align="center" prop="change" />
       <el-table-column label="成交量(W)" align="center" prop="volume" />
-      <el-table-column label="成交额(W)" align="center" prop="money" />
-      <el-table-column label="流通市值(E)" align="center" prop="tradedMarketValue" />
-      <el-table-column label="总市值(E)" align="center" prop="marketValue" />
-      <el-table-column label="换手率" align="center" prop="turnover" />
+      <el-table-column label="成交额(W)" show-overflow-tooltip align="center" prop="money" />
+      <el-table-column label="流通市值(E)" show-overflow-tooltip align="center" prop="tradedMarketValue" />
+      <el-table-column label="总市值(E)" show-overflow-tooltip align="center" prop="marketValue" />
+      <el-table-column label="换手率" align="center" show-overflow-tooltip prop="turnover" />
       <el-table-column label="pe" align="center" prop="peTtm" />
-      <el-table-column label="市销率" align="center" prop="psTtm" />
-      <el-table-column label="市现率" align="center" prop="pcTtm" />
-      <el-table-column label="市净率" align="center" prop="pb" />
+      <el-table-column label="市销率" align="center" show-overflow-tooltip prop="psTtm" />
+      <el-table-column label="市现率" align="center" show-overflow-tooltip prop="pcTtm" />
+      <el-table-column label="市净率" align="center" show-overflow-tooltip prop="pb" />
       <!-- <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -242,7 +257,7 @@
         </template>
       </el-table-column> -->
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -478,3 +493,8 @@ export default {
   }
 };
 </script>
+<style>
+.inputWidth{
+  width: 150px /*!important*/;
+}
+</style>

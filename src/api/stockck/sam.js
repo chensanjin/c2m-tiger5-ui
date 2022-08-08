@@ -1,6 +1,15 @@
 import request from '@/utils/request'
 
 // 查询rank票列表
+export function getEcharts(query) {
+  return request({
+    url: '/selectedrank/sam/getEcharts',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询rank票列表
 export function listSam(query) {
   return request({
     url: '/selectedrank/sam/list',

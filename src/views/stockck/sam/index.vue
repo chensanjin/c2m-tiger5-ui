@@ -47,7 +47,7 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="changeDiog">echart图</el-button>
+        <el-button icon="el-icon-search" size="mini" @click="changeDiog">走势图</el-button>
       </el-form-item>
     </el-form>
 
@@ -174,25 +174,29 @@
       </div>
     </el-dialog>
 
-
   <el-dialog
   title="echarts页面"
   :visible.sync="echartsDialogVisible"
-  width=80%;
-  height=80%;
+  width=500px;
+  height=500px;
   >
   <div ref="macarons" style="width: 100%; height: 200px;"></div>
   <span slot="footer" class="dialog-footer">
+    <el-input  v-model="st" label-width="120px" class="inputWidth"
+               placeholder="st"
+               clearable></el-input>
+    <el-input  v-model="et" label-width="120px" class="inputWidth"
+               placeholder="et"
+               clearable></el-input>
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="initEcharts">确 定</el-button>
   </span>
 </el-dialog>
-
   </div>
 </template>
 
 <script>
-import { listSam, getSam, delSam, addSam, updateSam, exportSam } from "@/api/stockck/sam";
+import { listSam, getSam, delSam, addSam, updateSam, exportSam, getEcharts } from "@/api/stockck/sam";
 import echarts from 'echarts'
 export default {
   name: "Sam",
@@ -207,6 +211,9 @@ export default {
       exportLoading: false,
       // 选中数组
       ids: [],
+      st: '',
+      et: '',
+      echartsData:[],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -251,7 +258,6 @@ export default {
     };
   },
   created() {
-    this.initDtableOptions();//初始化外联数据表
     this.getList();
   },
   methods: {
@@ -262,39 +268,79 @@ export default {
       })
     },
  initChart() {
-    console.warn(echarts)
       this.chart = echarts.init(this.$refs.macarons)
-      console.warn(this.chart)
       this.initEcharts()
     },
 
     initEcharts(){
- const option = { legend: {},
-            tooltip: {},
-            dataset: {
-              source: [
-
-                ['订单', 43.3, 85.8],
-                ['订单1', 83.1, 73.4],
-                ['订单2', 86.4, 65.2],
-                ['订单3', 72.4, 53.9],
-                ['订单4', 82.4, 53.9],
-                ['订单5', 42.4, 53.9],
-                ['订单6', 72.4, 53.9],
-                ['订单7', 72.4, 53.9]
-              ]
-            },
-            xAxis: { type: 'category' },
-            yAxis: {},
-
-            series: [ { type: 'bar' }, { type: 'bar' }]}
-          this.chart.setOption(option)
-
-
-
-
-    },
-    initDtableOptions(){
+        this.queryParams.st=this.st
+        this.queryParams.et=this.et
+        getEcharts(this.queryParams).then(response => {
+            this.echartsData = response.data;
+            const option = {
+                title: {
+                    text: 'Stacked Line'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['rank1','rank2','rank3','rank4','rank5']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: this.echartsData.xAxis
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: 'rank1',
+                        type: 'line',
+                        stack: 'Total',
+                        data: this.echartsData.rank1
+                    },
+                    {
+                        name: 'rank2',
+                        type: 'line',
+                        stack: 'Total',
+                        data: this.echartsData.rank2
+                    },
+                    {
+                        name: 'rank3',
+                        type: 'line',
+                        stack: 'Total',
+                        data: this.echartsData.rank3
+                    },
+                    {
+                        name: 'rank4',
+                        type: 'line',
+                        stack: 'Total',
+                        data: this.echartsData.rank4
+                    },
+                    {
+                        name: 'rank5',
+                        type: 'line',
+                        stack: 'Total',
+                        data: this.echartsData.rank5
+                    }
+                ]
+            };
+            this.chart.setOption(option)
+        });
     },
     /** 查询rank票列表 */
     getList() {
@@ -408,3 +454,8 @@ export default {
   }
 };
 </script>
+<style>
+  .inputWidth{
+    width: 150px /*!important*/;
+  }
+</style>

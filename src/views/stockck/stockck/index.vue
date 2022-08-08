@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="85px">
       <el-form-item label="ex-code" prop="code">
         <el-input
           v-model="queryParams.code"
@@ -23,7 +23,7 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="开盘价" prop="open">
+      <el-form-item label="开盘价>=" prop="open">
         <el-input
           v-model="queryParams.open"
           placeholder="请输入开盘价"
@@ -33,7 +33,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="最高价" prop="high">
+      <el-form-item label="最高价>=" prop="high">
         <el-input
           v-model="queryParams.high"
           class="inputWidth"
@@ -43,7 +43,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="最低价" prop="low">
+      <el-form-item label="最低价<=" prop="low">
         <el-input
           v-model="queryParams.low"
           class="inputWidth"
@@ -53,7 +53,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="收盘价" prop="close">
+      <el-form-item label="收盘价>=" prop="close">
         <el-input
           v-model="queryParams.close"
           class="inputWidth"
@@ -63,7 +63,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="涨跌幅" prop="change">
+      <el-form-item label="涨跌幅>=" prop="change">
         <el-input
           v-model="queryParams.change"
           class="inputWidth"
@@ -73,7 +73,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="成交量" prop="volume">
+      <el-form-item label="成交量>=" prop="volume">
         <el-input
           v-model="queryParams.volume"
           class="inputWidth"
@@ -83,7 +83,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="成交额" prop="money">
+      <el-form-item label="成交额>=" prop="money">
         <el-input
           v-model="queryParams.money"
           class="inputWidth"
@@ -123,7 +123,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="pe" prop="peTtm">
+      <el-form-item label="pe>=" prop="peTtm">
         <el-input
           v-model="queryParams.peTtm"
           class="inputWidth"
@@ -133,7 +133,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="市销率" prop="psTtm">
+      <el-form-item label="市销率>=" prop="psTtm">
         <el-input
           v-model="queryParams.psTtm"
           class="inputWidth"
@@ -143,7 +143,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="市现率" prop="pcTtm">
+      <el-form-item label="市现率>=" prop="pcTtm">
         <el-input
           v-model="queryParams.pcTtm"
           class="inputWidth"
@@ -153,7 +153,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="市净率" prop="pb">
+      <el-form-item label="市净率>=" prop="pb">
         <el-input
           v-model="queryParams.pb"
           class="inputWidth"

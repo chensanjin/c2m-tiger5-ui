@@ -47,7 +47,8 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        <el-button icon="el-icon-search" size="mini" @click="changeDiog">走势图</el-button>
+        <el-button icon="el-icon-search" size="mini" @click="changeDiog">每期图</el-button>
+        <el-button icon="el-icon-search" size="mini" @click="changeDiog2">净值图</el-button>
       </el-form-item>
     </el-form>
 
@@ -175,7 +176,7 @@
     </el-dialog>
 
   <el-dialog
-  title="echarts页面"
+  title="每期图"
   :visible.sync="echartsDialogVisible"
   width=500px;
   height=500px;
@@ -192,11 +193,29 @@
     <el-button type="primary" @click="initEcharts">确 定</el-button>
   </span>
 </el-dialog>
+    <el-dialog
+      title="净值图"
+      :visible.sync="echartsDialogVisible2"
+      width=500px;
+      height=500px;
+    >
+      <div ref="macarons2" style="width: 100%; height: 200px;"></div>
+      <span slot="footer" class="dialog-footer">
+    <el-input  v-model="st2" label-width="120px" class="inputWidth"
+               placeholder="st2"
+               clearable></el-input>
+    <el-input  v-model="et2" label-width="120px" class="inputWidth"
+               placeholder="et2"
+               clearable></el-input>
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="initEcharts2">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listSam, getSam, delSam, addSam, updateSam, exportSam, getEcharts } from "@/api/stockck/sam";
+import { listSam, getSam, delSam, addSam, updateSam, exportSam, getEcharts, getEcharts2 } from "@/api/stockck/sam";
 import echarts from 'echarts'
 export default {
   name: "Sam",
@@ -205,6 +224,7 @@ export default {
   data() {
     return {
       echartsDialogVisible:false,
+      echartsDialogVisible2:false,
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -213,7 +233,10 @@ export default {
       ids: [],
       st: '',
       et: '',
+      st2: '',
+      et2: '',
       echartsData:[],
+        echartsData2:[],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -267,10 +290,84 @@ export default {
         this.initChart()
       })
     },
+      changeDiog2(){
+          this.echartsDialogVisible2=true
+          this.$nextTick(()=>{
+              this.initChart2()
+          })
+      },
  initChart() {
       this.chart = echarts.init(this.$refs.macarons)
       this.initEcharts()
     },
+      initChart2() {
+          this.chart = echarts.init(this.$refs.macarons2)
+          this.initEcharts2()
+      },
+
+      initEcharts2(){
+          this.queryParams.st=this.st2
+          this.queryParams.et=this.et2
+          getEcharts2(this.queryParams).then(response => {
+              let s = response.data;
+              let x = 1;
+              for (let i = 0; i < s.length; i++) {
+                  x = x*s[i].rate;
+                  this.echartsData2.push([s[i].start_time, x]);
+              }
+              const option = {
+                  tooltip: {
+                      trigger: 'axis',
+                      position: function (pt) {
+                          return [pt[0], '10%'];
+                      }
+                  },
+                  title: {
+                      left: 'center',
+                      text: 'Large Ara Chart'
+                  },
+                  toolbox: {
+                      feature: {
+                          dataZoom: {
+                              yAxisIndex: 'none'
+                          },
+                          restore: {},
+                          saveAsImage: {}
+                      }
+                  },
+                  xAxis: {
+                      type: 'time',
+                      boundaryGap: false
+                  },
+                  yAxis: {
+                      type: 'value',
+                      boundaryGap: [0, '100%']
+                  },
+                  dataZoom: [
+                      {
+                          type: 'inside',
+                          start: 0,
+                          end: 20
+                      },
+                      {
+                          start: 0,
+                          end: 20
+                      }
+                  ],
+                  series: [
+                      {
+                          name: 'Fake Data',
+                          type: 'line',
+                          smooth: true,
+                          symbol: 'none',
+                          areaStyle: {},
+                          data: this.echartsData2
+                      }
+                  ]
+              };
+              this.chart.setOption(option)
+          });
+      },
 
     initEcharts(){
         this.queryParams.st=this.st

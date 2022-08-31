@@ -9,6 +9,14 @@ export function getEcharts(query) {
   })
 }
 
+export function getEcharts2(query) {
+  return request({
+    url: '/selectedrank/sam/getEcharts2',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询rank票列表
 export function listSam(query) {
   return request({

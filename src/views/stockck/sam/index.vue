@@ -178,10 +178,9 @@
   <el-dialog
   title="每期图"
   :visible.sync="echartsDialogVisible"
-  width=500px;
-  height=500px;
+  custom-class="width100"
   >
-  <div ref="macarons" style="width: 100%; height: 200px;"></div>
+  <div ref="macarons" style="width: 100%; height: 400px;"></div>
   <span slot="footer" class="dialog-footer">
     <el-input  v-model="st" label-width="120px" class="inputWidth"
                placeholder="st"
@@ -196,10 +195,9 @@
     <el-dialog
       title="净值图"
       :visible.sync="echartsDialogVisible2"
-      width=500px;
-      height=500px;
+      custom-class="width100"
     >
-      <div ref="macarons2" style="width: 100%; height: 200px;"></div>
+      <div ref="macarons2" style="width: 100%; height: 400px;"></div>
       <span slot="footer" class="dialog-footer">
     <el-input  v-model="st2" label-width="120px" class="inputWidth"
                placeholder="st2"
@@ -236,7 +234,8 @@ export default {
       st2: '',
       et2: '',
       echartsData:[],
-        echartsData2:[],
+        echartsData2x:[],
+        echartsData2y:[],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -306,62 +305,34 @@ export default {
       },
 
       initEcharts2(){
+          this.echartsData2x = [];
+          this.echartsData2y = [];
           this.queryParams.st=this.st2
           this.queryParams.et=this.et2
           getEcharts2(this.queryParams).then(response => {
               let s = response.data;
               let x = 1;
               for (let i = 0; i < s.length; i++) {
-                  x = x*s[i].rate;
-                  this.echartsData2.push([s[i].start_time, x]);
+                  x = x*(s[i].rate?s[i].rate:1);
+                  this.echartsData2x.push(s[i].start_time);
+                  this.echartsData2y.push(x);
               }
               const option = {
                   tooltip: {
                       trigger: 'axis',
-                      position: function (pt) {
-                          return [pt[0], '10%'];
-                      }
-                  },
-                  title: {
-                      left: 'center',
-                      text: 'Large Ara Chart'
-                  },
-                  toolbox: {
-                      feature: {
-                          dataZoom: {
-                              yAxisIndex: 'none'
-                          },
-                          restore: {},
-                          saveAsImage: {}
-                      }
                   },
                   xAxis: {
-                      type: 'time',
-                      boundaryGap: false
+                      type: 'category',
+                      data: this.echartsData2x
                   },
                   yAxis: {
-                      type: 'value',
-                      boundaryGap: [0, '100%']
+                      type: 'value'
                   },
-                  dataZoom: [
-                      {
-                          type: 'inside',
-                          start: 0,
-                          end: 20
-                      },
-                      {
-                          start: 0,
-                          end: 20
-                      }
-                  ],
                   series: [
                       {
-                          name: 'Fake Data',
+                          data: this.echartsData2y,
                           type: 'line',
-                          smooth: true,
-                          symbol: 'none',
-                          areaStyle: {},
-                          data: this.echartsData2
+                          smooth: true
                       }
                   ]
               };
@@ -554,5 +525,9 @@ export default {
 <style>
   .inputWidth{
     width: 150px /*!important*/;
+  }
+  .width100{
+    width: 100%;
+    height: 700px
   }
 </style>

@@ -10,212 +10,223 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="ma金叉" prop="deathcross">
-        <el-input
-          v-model="queryParams.deathcross"
-          placeholder="请输入ma金叉"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <!--<el-form-item label="ma金叉" prop="deathcross">
+  <el-input
+    v-model="queryParams.deathcross"
+    placeholder="请输入ma金叉"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="ma死叉" prop="goldencross">
+  <el-input
+    v-model="queryParams.goldencross"
+    placeholder="请输入ma死叉"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="ma技术回档" prop="technicalreturn">
+  <el-input
+    v-model="queryParams.technicalreturn"
+    placeholder="请输入ma技术回档"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="macd空头行情" prop="bearmarket">
+  <el-input
+    v-model="queryParams.bearmarket"
+    placeholder="请输入macd空头行情"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="macd多头行情" prop="bullmarket">
+  <el-input
+    v-model="queryParams.bullmarket"
+    placeholder="请输入macd多头行情"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="macd上升趋势" prop="uptrend">
+  <el-input
+    v-model="queryParams.uptrend"
+    placeholder="请输入macd上升趋势"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="macd下降趋势" prop="downtrend">
+  <el-input
+    v-model="queryParams.downtrend"
+    placeholder="请输入macd下降趋势"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="macd顶背离" prop="topdivergence">
+  <el-input
+    v-model="queryParams.topdivergence"
+    placeholder="请输入macd顶背离"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="macd底背离" prop="lowdivergence">
+  <el-input
+    v-model="queryParams.lowdivergence"
+    placeholder="请输入macd底背离"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="rsi牛始" prop="cattlestart">
+  <el-input
+    v-model="queryParams.cattlestart"
+    placeholder="请输入rsi牛始"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="rsi市场热度" prop="prosperitylevel">
+  <el-input
+    v-model="queryParams.prosperitylevel"
+    placeholder="请输入rsi市场热度"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="kdj金叉" prop="kdjgoldencross">
+  <el-input
+    v-model="queryParams.kdjgoldencross"
+    placeholder="请输入kdj金叉"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="kdj死叉" prop="kdjdeathcross">
+  <el-input
+    v-model="queryParams.kdjdeathcross"
+    placeholder="请输入kdj死叉"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="kdj超买" prop="overbought">
+  <el-input
+    v-model="queryParams.overbought"
+    placeholder="请输入kdj超买"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="kdj超卖" prop="oversold">
+  <el-input
+    v-model="queryParams.oversold"
+    placeholder="请输入kdj超卖"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="kdj向上趋势" prop="shortupwardtrend">
+  <el-input
+    v-model="queryParams.shortupwardtrend"
+    placeholder="请输入kdj向上趋势"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="kdj向下趋势" prop="shortdownwardtrend">
+  <el-input
+    v-model="queryParams.shortdownwardtrend"
+    placeholder="请输入kdj向下趋势"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="A区面积" prop="areaa">
+  <el-input
+    v-model="queryParams.areaa"
+    placeholder="请输入A区面积"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="B区面积" prop="areab">
+  <el-input
+    v-model="queryParams.areab"
+    placeholder="请输入B区面积"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="A区成交量" prop="volumea">
+  <el-input
+    v-model="queryParams.volumea"
+    placeholder="请输入A区成交量"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="B区成交量" prop="volumeb">
+  <el-input
+    v-model="queryParams.volumeb"
+    placeholder="请输入B区成交量"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>
+<el-form-item label="酒田" prop="jiutian">
+  <el-input
+    v-model="queryParams.jiutian"
+    placeholder="请输入酒田"
+    clearable
+    size="small"
+    @keyup.enter.native="handleQuery"
+  />
+</el-form-item>-->
+      <el-form-item label="酒田均线" prop="jiutian">
+        <el-select v-model="queryParams.jiutian" placeholder="请选择酒田均线" clearable size="small">
+          <el-option
+            v-for="dict in jiutianOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="ma死叉" prop="goldencross">
-        <el-input
-          v-model="queryParams.goldencross"
-          placeholder="请输入ma死叉"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <!--<el-form-item label="ma技术回档" prop="technicalreturn">
-        <el-input
-          v-model="queryParams.technicalreturn"
-          placeholder="请输入ma技术回档"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="macd空头行情" prop="bearmarket">
-        <el-input
-          v-model="queryParams.bearmarket"
-          placeholder="请输入macd空头行情"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="macd多头行情" prop="bullmarket">
-        <el-input
-          v-model="queryParams.bullmarket"
-          placeholder="请输入macd多头行情"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="macd上升趋势" prop="uptrend">
-        <el-input
-          v-model="queryParams.uptrend"
-          placeholder="请输入macd上升趋势"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="macd下降趋势" prop="downtrend">
-        <el-input
-          v-model="queryParams.downtrend"
-          placeholder="请输入macd下降趋势"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="macd顶背离" prop="topdivergence">
-        <el-input
-          v-model="queryParams.topdivergence"
-          placeholder="请输入macd顶背离"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="macd底背离" prop="lowdivergence">
-        <el-input
-          v-model="queryParams.lowdivergence"
-          placeholder="请输入macd底背离"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="rsi牛始" prop="cattlestart">
-        <el-input
-          v-model="queryParams.cattlestart"
-          placeholder="请输入rsi牛始"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="rsi市场热度" prop="prosperitylevel">
-        <el-input
-          v-model="queryParams.prosperitylevel"
-          placeholder="请输入rsi市场热度"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="kdj金叉" prop="kdjgoldencross">
-        <el-input
-          v-model="queryParams.kdjgoldencross"
-          placeholder="请输入kdj金叉"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="kdj死叉" prop="kdjdeathcross">
-        <el-input
-          v-model="queryParams.kdjdeathcross"
-          placeholder="请输入kdj死叉"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="kdj超买" prop="overbought">
-        <el-input
-          v-model="queryParams.overbought"
-          placeholder="请输入kdj超买"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="kdj超卖" prop="oversold">
-        <el-input
-          v-model="queryParams.oversold"
-          placeholder="请输入kdj超卖"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="kdj向上趋势" prop="shortupwardtrend">
-        <el-input
-          v-model="queryParams.shortupwardtrend"
-          placeholder="请输入kdj向上趋势"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="kdj向下趋势" prop="shortdownwardtrend">
-        <el-input
-          v-model="queryParams.shortdownwardtrend"
-          placeholder="请输入kdj向下趋势"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="A区面积" prop="areaa">
-        <el-input
-          v-model="queryParams.areaa"
-          placeholder="请输入A区面积"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="B区面积" prop="areab">
-        <el-input
-          v-model="queryParams.areab"
-          placeholder="请输入B区面积"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="A区成交量" prop="volumea">
-        <el-input
-          v-model="queryParams.volumea"
-          placeholder="请输入A区成交量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="B区成交量" prop="volumeb">
-        <el-input
-          v-model="queryParams.volumeb"
-          placeholder="请输入B区成交量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="酒田" prop="jiutian">
-        <el-input
-          v-model="queryParams.jiutian"
-          placeholder="请输入酒田"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
-      <el-form-item label="均线补齐" prop="jiutianbak">
-        <el-input
-          v-model="queryParams.jiutianbak"
-          placeholder="请输入均线解读"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="类型" prop="remark">
+        <el-select v-model="queryParams.remark" placeholder="请选择类型">
+          <el-option
+            v-for="dict in remarkOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="回溯" prop="replaydesc">
         <el-input
@@ -226,10 +237,11 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        <el-button type="danger" size="max">0是【否】，1是【是】;目前放一年数据;排序权重【面积】、【成交量】各50%</el-button>
+        <el-button type="danger" title='0是【否】，1是【是】;目前放一年数据;排序权重【面积】、【成交量】各50%' size="mini">说明</el-button>
       </el-form-item>
     </el-form>
 
@@ -248,18 +260,22 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="echnicalaspectList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading"     border
+              height="550"
+              :data="echnicalaspectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="代码" align="center" prop="stocknum" />
+      <el-table-column label="代码" align="center" min-width="100px" prop="stocknum" />
       <el-table-column label="A面积" align="center" prop="areaa" />
       <el-table-column label="B面积" align="center" prop="areab" />
       <el-table-column label="A成交量(万)" align="center" prop="volumea" />
       <el-table-column label="B成交量(万)" align="center" prop="volumeb" />
-      <el-table-column label="均线补齐" align="center" prop="jiutianbak" />
-      <el-table-column label="回溯说明" align="center" prop="replaydesc" />
-      <el-table-column label="更新时间" align="center" prop="updatedate" />
-      <el-table-column label="ma金叉" align="center" prop="deathcross" />
-      <el-table-column label="ma死叉" align="center" prop="goldencross" />
+      <el-table-column label="A/B" align="center" prop="wufactor" />
+      <el-table-column label="酒田均线" align="center" prop="jiutian" :formatter="jiutianFormat"/>
+      <el-table-column label="类型" align="center" prop="remark" :formatter="remarkFormat"/>
+      <el-table-column label="回溯说明"  min-width="150px" show-overflow-tooltip align="center" prop="replaydesc" />
+      <el-table-column label="更新时间" align="center" min-width="100px" prop="updatedate" />
+      <el-table-column label="ma死叉" align="center" prop="deathcross" />
+      <el-table-column label="ma金叉" align="center" prop="goldencross" />
       <el-table-column label="ma技术回档" align="center" prop="technicalreturn" />
       <el-table-column label="macd空头行情" align="center" prop="bearmarket" />
       <el-table-column label="macd多头行情" align="center" prop="bullmarket" />
@@ -404,6 +420,10 @@ export default {
       total: 0,
       // 技术现状表格数据
       echnicalaspectList: [],
+        // 酒田字典
+      jiutianOptions: [],
+      // 备注字典
+      remarkOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -438,6 +458,7 @@ export default {
         jiutianbak: null,
         replaydesc: null,
         updatedate: null,
+        remark: null,
       },
       // 表单参数
       form: {},
@@ -455,6 +476,12 @@ export default {
   created() {
     this.initDtableOptions();//初始化外联数据表
     this.getList();
+    this.getDicts("jiutianma").then(response => {
+        this.jiutianOptions = response.data;
+    });
+    this.getDicts("stocktype").then(response => {
+        this.remarkOptions = response.data;
+    });
   },
   methods: {
     initDtableOptions(){
@@ -467,6 +494,14 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 酒田字典翻译
+    jiutianFormat(row, column) {
+        return this.selectDictLabel(this.jiutianOptions, row.jiutian);
+    },
+    // 备注字典翻译
+    remarkFormat(row, column) {
+        return this.selectDictLabel(this.remarkOptions, row.remark);
     },
     // 取消按钮
     cancel() {

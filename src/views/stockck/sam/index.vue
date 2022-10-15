@@ -49,6 +49,7 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         <el-button icon="el-icon-search" size="mini" @click="changeDiog">每期图</el-button>
         <el-button icon="el-icon-search" size="mini" @click="changeDiog2">净值图</el-button>
+        <el-button icon="el-icon-search" size="mini" @click="changeDiog99">涨跌停图</el-button>
       </el-form-item>
     </el-form>
 
@@ -209,11 +210,29 @@
     <el-button type="primary" @click="initEcharts2">确 定</el-button>
   </span>
     </el-dialog>
+
+    <el-dialog
+      title="涨跌停图"
+      :visible.sync="echartsDialogVisible99"
+      custom-class="width100"
+    >
+      <div ref="macarons99" style="width: 100%; height: 400px;"></div>
+      <span slot="footer" class="dialog-footer">
+    <el-input  v-model="st99" label-width="120px" class="inputWidth"
+               placeholder="st99"
+               clearable></el-input>
+    <el-input  v-model="et99" label-width="120px" class="inputWidth"
+               placeholder="et99"
+               clearable></el-input>
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="initEcharts99">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listSam, getSam, delSam, addSam, updateSam, exportSam, getEcharts, getEcharts2 } from "@/api/stockck/sam";
+import { listSam, getSam, delSam, addSam, updateSam, exportSam, getEcharts, getEcharts2, getEcharts99 } from "@/api/stockck/sam";
 import echarts from 'echarts'
 export default {
   name: "Sam",
@@ -223,6 +242,7 @@ export default {
     return {
       echartsDialogVisible:false,
       echartsDialogVisible2:false,
+      echartsDialogVisible99:false,
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -233,9 +253,14 @@ export default {
       et: '',
       st2: '',
       et2: '',
+        st99: '',
+        et99: '',
       echartsData:[],
         echartsData2x:[],
         echartsData2y:[],
+        echartsData99x:[],
+        echartsData99y1:[],
+        echartsData99y2:[],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -295,6 +320,12 @@ export default {
               this.initChart2()
           })
       },
+      changeDiog99(){
+          this.echartsDialogVisible99=true
+          this.$nextTick(()=>{
+              this.initChart99()
+          })
+      },
  initChart() {
       this.chart = echarts.init(this.$refs.macarons)
       this.initEcharts()
@@ -302,6 +333,65 @@ export default {
       initChart2() {
           this.chart = echarts.init(this.$refs.macarons2)
           this.initEcharts2()
+      },
+      initChart99() {
+          this.chart = echarts.init(this.$refs.macarons99)
+          this.initEcharts99()
+      },
+
+      initEcharts99(){
+          this.echartsData99x = [];
+          this.echartsData99y1 = [];
+          this.echartsData99y2 = [];
+          this.queryParams.st=this.st99
+          this.queryParams.et=this.et99
+          getEcharts99(this.queryParams).then(response => {
+              let s = response.data;
+              for (let i = 0; i < s.length; i++) {
+                  this.echartsData99x.push(s[i].date);
+                  this.echartsData99y1.push(s[i].nine);
+                  this.echartsData99y2.push(s[i].fnine);
+              }
+              const option = {
+                  title: {
+                      text: '涨跌停统计(按9.9%算)'
+                  },
+                  tooltip: {
+                      trigger: 'axis'
+                  },
+                  legend: {
+                      data: ['涨停','跌停']
+                  },
+                  grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '3%',
+                      containLabel: true
+                  },
+                  xAxis: {
+                      type: 'category',
+                      data: this.echartsData99x
+                  },
+                  yAxis: {
+                      type: 'value'
+                  },
+                  series: [
+                      {
+                          name: '涨停',
+                          data: this.echartsData99y1,
+                          type: 'line',
+                          smooth: true
+                      },
+                      {
+                          name: '跌停',
+                          data: this.echartsData99y2,
+                          type: 'line',
+                          smooth: true
+                      }
+                  ]
+              };
+              this.chart.setOption(option)
+          });
       },
 
       initEcharts2(){

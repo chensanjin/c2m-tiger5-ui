@@ -16,6 +16,7 @@
       </div>
     </div>
     <el-table :data="cameraList" v-loading="loading">
+      <el-table-column type="index" label="序号"></el-table-column>
       <el-table-column label="code" align="center" prop="code" />
       <el-table-column label="factor2" align="center" prop="factor2" />
       <el-table-column label="marketv2" align="center" prop="marketv2" />

@@ -17,6 +17,14 @@ export function getEcharts2(query) {
   })
 }
 
+export function getEcharts99(query) {
+  return request({
+    url: '/selectedrank/sam/getEcharts99',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询rank票列表
 export function listSam(query) {
   return request({
